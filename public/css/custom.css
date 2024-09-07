@@ -1,0 +1,217 @@
+.navbar-custom {
+    background-color: #E90B0B;
+    padding: 15px 20px; 
+    height: 90px;
+}
+.footer-custom {
+    background-color: #E90B0B;
+    color: white;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: left;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.footer-custom > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-custom a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    white-space: nowrap;
+}
+
+.footer-custom a:first-child {
+    margin-left: 0;
+}
+
+.footer-custom a:hover {
+    text-decoration: underline;
+}
+.content-area {
+    padding-top: 95px; 
+    padding-bottom: 90px;
+    min-height: calc(100vh - 165px);
+    width: 70%;
+    margin: 0 auto;
+}
+
+#ajax-content {
+    overflow: auto;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+    font-size: 1.6rem; 
+    margin: 0 60px; /* Añade espacio entre los enlaces */
+    padding: 0; 
+}
+.navbar-nav .nav-link:hover {
+    color: #ddd !important;
+}
+.nav-link.active {
+    border-bottom: 3px solid white; /* Añade una línea blanca debajo del enlace activo */
+    color: white !important; /* Asegura que el texto del enlace activo siga siendo blanco */
+}
+
+/* Estilos personalizados para los tooltips */
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+.tooltip-container .tooltip-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+    color: #333; /* Texto en gris oscuro */
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 80%; /* Posición arriba del icono */
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.tooltip-container .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* Flecha del tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.8) transparent transparent transparent; /* Flecha blanca */
+}
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+.iconRedes{
+    height: 35px;
+}
+.tituloInferior{
+    font-size: 20px; 
+    margin-right: 15px;
+}
+#saritaImg{
+    height: 80px;
+}
+
+
+@media (max-width: 768px) {
+    .navbar-custom {
+        padding: 10px;
+        height: auto;        
+    }
+    
+    .navbar-brand img {
+        height: 60px;
+    }
+    
+    #navbarNav {
+        background-color: #E90B0B;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: none;
+    }
+
+    #navbarNav.show {
+        display: block;
+    }
+
+    .navbar-nav {
+        padding: 10px;
+    }
+
+    .navbar-nav .nav-link {
+        color: white !important;
+        font-size: 1rem;
+        margin: 10px 0;
+        text-align: center;
+    }
+    
+    .d-flex {
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .tooltip-container {
+        margin: 0 10px;
+    }
+
+    .content-area {
+        width: 95%;
+        padding-top: 80px;
+    }
+    
+    
+    .footer-custom {
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+
+    .footer-custom > div {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-custom a {
+        margin-left: 0;
+        margin-bottom: 5px;
+    }
+    
+    .footer-custom img {
+        height: 25px;
+    }
+
+    .iconRedes{
+        height: 25px;
+        margin-bottom: 3px;
+    }
+
+    #saritaImg{
+        height: 50px;
+        margin-top: -10px;
+    }
+    .tituloInferior{
+        font-size: 15px; 
+    }
+
+    #Lema{
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between; /* Coloca los elementos en los extremos */
+        align-items: center;
+    }
+
+}
+
+/* Estilos para el menú hamburguesa */
+.navbar-toggler {
+    border-color: white;
+    margin-top: -10px;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
