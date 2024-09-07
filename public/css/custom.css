@@ -3,44 +3,108 @@
     padding: 15px 20px; 
     height: 90px;
 }
+
+.navbar-nav {
+    width: 100%;
+    justify-content: center;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+    font-size: 1.6rem; 
+    margin: 0 60px; 
+    padding: 0; 
+}
+.navbar-nav .nav-link:hover {
+    color: #ddd !important;
+}
+.nav-link.active {
+    border-bottom: 3px solid white; /* Añade una línea blanca debajo del enlace activo */
+    color: white !important; /* Asegura que el texto del enlace activo siga siendo blanco */
+}
+
 .footer-custom {
     background-color: #E90B0B;
     color: white;
-    padding: 10px 20px;
+    padding: 15px 0;
     width: 100%;
-    text-align: left;
-    font-size: 1.3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    
 }
 
-.footer-custom > div {
-    width: 100%;
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
 }
 
-.footer-custom a {
+.footer-left {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.footer-link {
+    display: flex;
+    align-items: center;
     color: white;
     text-decoration: none;
-    margin-left: 20px;
-    white-space: nowrap;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 20px;
+    background-color:transparent;
 }
 
-.footer-custom a:first-child {
-    margin-left: 0;
+.footer-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.footer-custom a:hover {
-    text-decoration: underline;
+.footer-link:hover,
+.footer-link:focus {
+    outline: none;
+    color: white; /* Asegura que el texto permanezca blanco */
 }
+
+.icon-redes {
+    height: 24px;
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+}
+
+.footer-link:hover .icon-redes {
+    transform: scale(1.1);
+}
+
+.footer-link span {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+}
+
+
+.titulo-inferior {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.icon-helado {
+    height: 40px;
+}
+
 .content-area {
     padding-top: 95px; 
     padding-bottom: 90px;
@@ -53,19 +117,7 @@
     overflow: auto;
 }
 
-.navbar-nav .nav-link {
-    color: white !important;
-    font-size: 1.6rem; 
-    margin: 0 60px; /* Añade espacio entre los enlaces */
-    padding: 0; 
-}
-.navbar-nav .nav-link:hover {
-    color: #ddd !important;
-}
-.nav-link.active {
-    border-bottom: 3px solid white; /* Añade una línea blanca debajo del enlace activo */
-    color: white !important; /* Asegura que el texto del enlace activo siga siendo blanco */
-}
+
 
 /* Estilos personalizados para los tooltips */
 .tooltip-container {
@@ -102,13 +154,7 @@
     visibility: visible;
     opacity: 1;
 }
-.iconRedes{
-    height: 35px;
-}
-.tituloInferior{
-    font-size: 20px; 
-    margin-right: 15px;
-}
+
 #saritaImg{
     height: 80px;
 }
@@ -117,7 +163,7 @@
 @media (max-width: 768px) {
     .navbar-custom {
         padding: 10px;
-        height: auto;        
+        height: 60px;        
     }
     
     .navbar-brand img {
@@ -132,6 +178,7 @@
         right: 0;
         z-index: 1000;
         display: none;
+        
     }
 
     #navbarNav.show {
@@ -144,9 +191,10 @@
 
     .navbar-nav .nav-link {
         color: white !important;
-        font-size: 1rem;
-        margin: 10px 0;
+        font-size: 1.2rem;
+        margin: 15px 0;
         text-align: center;
+        padding: 10px 0;
     }
     
     .d-flex {
@@ -164,54 +212,78 @@
         padding-top: 80px;
     }
     
-    
     .footer-custom {
-        font-size: 0.8rem;
-        padding: 10px;
+        padding: 10px 0;
     }
 
-    .footer-custom > div {
+    .footer-content {
         flex-direction: column;
-        align-items: flex-start;
+        gap: 15px;
     }
 
-    .footer-custom a {
-        margin-left: 0;
+    .footer-left {
+        flex-wrap: wrap;
+        justify-content: left;
+        gap: 10px;
+    }
+
+    .footer-link {
+        font-size: 0.8rem;
+        padding: 0px 0px;
+        margin-top: -5px;
+    }
+
+    .icon-redes {
+        height: 20px;
+    }
+
+    .footer-right {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .titulo-inferior {
+        font-size: 1rem;
+        margin-right: 0;
         margin-bottom: 5px;
     }
+
+    .icon-helado {
+        height: 30px;
+    }
     
-    .footer-custom img {
-        height: 25px;
-    }
-
-    .iconRedes{
-        height: 25px;
-        margin-bottom: 3px;
-    }
-
     #saritaImg{
         height: 50px;
         margin-top: -10px;
     }
-    .tituloInferior{
-        font-size: 15px; 
-    }
-
-    #Lema{
-        margin-top: 10px;
-        display: flex;
-        justify-content: space-between; /* Coloca los elementos en los extremos */
-        align-items: center;
-    }
+    
 
 }
 
 /* Estilos para el menú hamburguesa */
 .navbar-toggler {
     border-color: white;
-    margin-top: -10px;
+    padding: .25rem .75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: .25rem;
+    transition: box-shadow .15s ease-in-out;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(255,255,255,0.25);
 }
 
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    content: "";
+    background-size: 100% 100%;
 }
