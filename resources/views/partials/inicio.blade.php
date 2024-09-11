@@ -1,4 +1,4 @@
-<!-- Barra Inferior (solo se muestra en la vista principal) -->
+<!-- Barra Inferior-->
 <footer class="footer-custom">
     <div class="footer-content">
         <div class="footer-left">
