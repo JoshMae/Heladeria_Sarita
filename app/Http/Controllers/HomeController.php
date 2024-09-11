@@ -11,23 +11,23 @@ class HomeController extends Controller
         if (request()->ajax()) {
             return view('partials.inicio')->render();
         }
-        return view('inicio');
+        return view('index');
     }
 
     public function nosotros()
     {
         if (request()->ajax()) {
-            return view('nosotros')->render();
+            return view('partials.nosotros')->render();
         }
-        return view('nosotros');
+        return view('index');
     }
 
     public function catalogo()
     {
         if (request()->ajax()) {
-            return view('catalogo')->render();
+            return view('partials.catalogo')->render();
         }
-        return view('catalogo');
+        return view('index');
     }
 
     public function ubicacion()
@@ -35,7 +35,7 @@ class HomeController extends Controller
         if (request()->ajax()) {
             return view('partials.ubicacion')->render();
         }
-        return view('ubicacion');
+        return view('index');
     }
 
     public function usuario()
@@ -43,7 +43,7 @@ class HomeController extends Controller
         if (request()->ajax()) {
             return view('usuario')->render();
         }
-        return view('usuario');
+        return view('index');
     }
 
     public function carrito()
@@ -51,6 +51,6 @@ class HomeController extends Controller
         if (request()->ajax()) {
             return view('carrito')->render();
         }
-        return view('carrito');
+        return view('index');
     }
 }

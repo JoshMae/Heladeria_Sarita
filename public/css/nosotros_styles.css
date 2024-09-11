@@ -1,0 +1,317 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f7f7;
+    color: white;
+    text-align: center;
+}
+
+header {
+    background-color: #e90b0b;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.floating-text {
+    font-size: 36px;
+    color: #ffffff;
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra de texto para el efecto de flotación */
+}
+
+.principle-section {
+    position: relative;
+    background-image: url('4.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 100px;
+}
+
+.principle-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 0, 0, 0.4);; /* Rojo con 88% de transparencia */
+    z-index: 1;
+}
+
+.principle-section h1 {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.principle-section p {
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.principle-section h1,
+.principle-section p {
+    position: relative;
+    z-index: 2; /* Para que los textos estén por encima del cuadro rojo */
+}
+
+
+.mission-vision {
+    display: flex;
+    justify-content: space-around;
+    text-align: justify;
+    padding: 40px 20px;
+    background: linear-gradient(to right, #fcd72b, #ff6300);
+}
+
+.mission, .vision {
+    width: 45%;
+    background-color: rgba(255, 255, 255, 0.0);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.mission h2, .vision h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.mission p, .vision p {
+    font-size: 12px;
+}
+
+.values {
+    background-color: #e90b0b;
+    padding: 40px 20px;
+}
+
+.values h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.values-list {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.values-list div {
+    font-size: 15px;
+}
+
+.logo {
+    width: 20px; /* Ajusta el tamaño del logo según sea necesario */
+    height: auto;
+    margin-right: 10px; /* Espacio entre el logo y el texto */
+}
+
+footer {
+    background-color: #e90b0b;
+    padding: 20px;
+    color: white;
+}
+
+
+/*Modelo resposivo */
+
+@media (max-width: 480px) {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f7f7f7;
+        color: white;
+        text-align: center;
+    }
+    
+    header {
+        background-color: #e90b0b;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    }
+    
+    .floating-text {
+        font-size: 36px;
+        color: #ffffff;
+        text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+    
+    .principle-section {
+        position: relative;
+        background-image: url('4.jpg');
+        background-size: cover;
+        background-position: center;
+        padding: 100px 20px; /* Ajuste en padding para pantallas pequeñas */
+    }
+    
+    .principle-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 0, 0, 0.4);
+        z-index: 1;
+    }
+    
+    .principle-section h1 {
+        font-size: 48px;
+        font-weight: bold;
+    }
+    
+    .principle-section p {
+        font-size: 8px;
+        margin-top: 10px;
+    }
+    
+    .principle-section h1,
+    .principle-section p {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .mission-vision {
+        display: flex;
+        text-align: justify; /* Justifica el texto en cada bloque */
+        flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+        align-items: center; /* Centra el contenido horizontalmente */
+        text-align: center;
+        padding: 40px 20px;
+        background: linear-gradient(to right, #fcd72b, #ff6300);
+    }
+    
+    .mission, .vision {
+        text-align: justify; /* Justifica el texto en cada bloque */
+        width: 90%; /* Aumenta el ancho en pantallas pequeñas */
+        max-width: 600px; /* Establece un máximo ancho para mantener la legibilidad */
+        background-color: rgba(255, 255, 255, 0.0);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 10px 0; /* Añade espacio entre elementos */
+    }
+    
+    .mission h2, .vision h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+    
+    .mission p, .vision p {
+        font-size: 12px;
+        
+    }
+    
+    .values {
+        background-color: #e90b0b;
+        padding: 40px 20px;
+    }
+    
+    .values h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+    
+    .values-list {
+        display: flex;
+        flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+        align-items: center; /* Centra el contenido horizontalmente */
+        gap: 20px; /* Reduce el espacio entre elementos */
+    }
+    
+    .values-list div {
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .logo {
+        width: 20px;
+        height: auto;
+        margin-right: 10px;
+    }
+    
+    footer {
+        background-color: #e90b0b;
+        padding: 20px;
+        color: white;
+        text-align: center;
+    }
+    
+    /* Consultas de medios para pantallas más pequeñas */
+    @media (max-width: 768px) {
+        .principle-section {
+            padding: 60px 20px;
+        }
+    
+        .principle-section h1 {
+            font-size: 36px;
+        }
+    
+        .principle-section p {
+            font-size: 14px;
+        }
+    
+        .mission h2, .vision h2 {
+            font-size: 30px;
+        }
+    
+        .mission p, .vision p {
+            font-size: 14px;
+        }
+    
+        .values h2 {
+            font-size: 30px;
+        }
+    
+        .values-list {
+            gap: 10px;
+        }
+    
+        .logo {
+            width: 16px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .floating-text {
+            font-size: 28px;
+        }
+    
+        .principle-section h1 {
+            font-size: 28px;
+        }
+    
+        .principle-section p {
+            font-size: 12px;
+        }
+    
+        .mission h2, .vision h2 {
+            font-size: 24px;
+        }
+    
+        .mission p, .vision p {
+            font-size: 12px;
+        }
+    
+        .values h2 {
+            font-size: 24px;
+        }
+    
+        .values-list {
+            flex-direction: column;
+        }
+    }
+}
