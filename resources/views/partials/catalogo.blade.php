@@ -1,11 +1,20 @@
-<section class="principle-section">
-
-</section>
+@if(isset($images['fondo']) && isset($images['helados']))
+    <section class="principle-section" style="background-image: url('{{ asset($images['fondo'][0]->direccion) }}'); background-size: cover; background-position: center; height: 400px; position: relative;">
+        @foreach($images['helados'] as $helado)
+            <img src="{{ asset($helado->direccion) }}" alt="{{ $helado->nombre }}" style="position: absolute; width: 100px; height: auto; left: {{ $loop->index * 25 }}%; top: 50%; transform: translateY(-50%);">
+        @endforeach
+    </section>
+@else
+    <section class="principle-section">
+        <p>No se encontraron imágenes para el catálogo</p>
+    </section>
+@endif
 
 <div class="image-container">
     <a href="https://heladosarita.com/nuestros-productos/sarita/"><img src="{{ asset('images/helados.png') }}" alt="Normal"></a>
     <a href="https://heladosarita.com/nuestros-productos/sarita/"><img src="{{ asset('images/yogurt.png') }}" alt="Yogurt"></a>
-</div> 
+</div>
+
 <!-- Barra Inferior-->
 <footer class="footer-custom2">
     <div class="footer-content">
@@ -29,3 +38,4 @@
         </div>
     </div>
 </footer>
+

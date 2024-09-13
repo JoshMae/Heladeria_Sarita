@@ -1,9 +1,9 @@
 .principle-section{
     position: relative;
-    background-color: #F44554;
     background-size: cover;
     background-position: center;
-    padding: 200px 100px;
+    padding: 9em 100px;
+    height: 9em;
 }
 
 .image-container {
