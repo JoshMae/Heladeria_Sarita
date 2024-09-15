@@ -93,16 +93,16 @@
 
 .paleta {
     transform: translateY(100px) rotate(-40deg); 
-    margin-left: -100px;
-    height: 22em;
-    bottom: -70px;
+    margin-left: -90px;
+    height: 23em;
+    bottom: -80px;
     animation-name: subirPaleta;
     animation-delay: 0.2s;
 }
 
 .cono {
     transform: translateY(100px) rotate(40deg); 
-    margin-left: 200px;
+    margin-left: 180px;
     height: 33em;
     bottom: -160px;
     animation-name: subirCono;
