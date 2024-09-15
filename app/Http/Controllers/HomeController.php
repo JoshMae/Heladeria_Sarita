@@ -21,18 +21,21 @@ class HomeController extends Controller
     {
         if (request()->ajax()) {
             return view('partials.nosotros')->render();
-        }
+        }   
         return view('index');
     }
 
     public function catalogo()
     {
-        $images = $this->traerImagenes('Catalogo');
-        dd($images);
+        $image1 = $this->traerImagenes('1');
+        $image2 = $this->traerImagenes('2');
+        $image3 = $this->traerImagenes('3');
+        $image4 = $this->traerImagenes('4');    
+        //dd($images);
         if (request()->ajax()) {
-            return view('partials.catalogo', compact('images'))->render();
+            return view('partials.catalogo', compact('image1','image2','image3','image4'))->render();
         }
-        return view('index', compact('images'));
+        return view('index', compact('image1','image2','image3','image4'));
     }
 
     public function ubicacion()
@@ -60,10 +63,10 @@ class HomeController extends Controller
     }
 
     //Funcion para traer Imagenes
-    public function traerImagenes($vista){
+    public function traerImagenes($id){
         $images = DB::table('image')
-                     ->where('vista', $vista)
+                     ->where('id', $id)
                      ->get();
-        return $images->groupBy('id');
+        return $images;
     }
 }

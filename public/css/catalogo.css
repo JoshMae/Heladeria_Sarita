@@ -34,8 +34,157 @@
     
 }
 
+/*Para el encabezado del catalogo*/
+.principle-section.image-background {
+    position: relative;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.imagenEnca{
+    position: absolute;
+    left: 20;
+    object-fit: cover;
+    object-position: bottom;
+}
+
+@keyframes subirPaleta {
+    0% {
+        transform: translateY(100px) rotate(-40deg); /* Mantiene la rotación y el desplazamiento */
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) rotate(-40deg);
+        opacity: 1;
+    }
+}
+
+@keyframes subirCono {
+    0% {
+        transform: translateY(100px) rotate(40deg); /* Mantiene la rotación y el desplazamiento */
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) rotate(40deg);
+        opacity: 1;
+    }
+}
+
+@keyframes subirSundae {
+    0% {
+        transform: translateY(100px) rotate(0deg); /* No tiene rotación inicial */
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.paleta, .cono, .sundae {
+    position: absolute;
+    opacity: 0;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards; 
+}
+
+.paleta {
+    transform: translateY(100px) rotate(-40deg); 
+    margin-left: -100px;
+    height: 22em;
+    bottom: -70px;
+    animation-name: subirPaleta;
+    animation-delay: 0.2s;
+}
+
+.cono {
+    transform: translateY(100px) rotate(40deg); 
+    margin-left: 200px;
+    height: 33em;
+    bottom: -160px;
+    animation-name: subirCono;
+    animation-delay: 0.4s;
+}
+
+.sundae {
+    transform: translateY(100px);
+    margin-left: 40px;
+    height: 27em;
+    bottom: -90px;
+    animation-name: subirSundae;
+    animation-delay: 0.6s;
+}
+
+.image-container {
+    position: relative;
+    z-index: 1;
+}
+
+.comparte {
+    position: absolute;
+    left: 0;
+    height: 20em;
+    bottom: 0;
+    transition: transform 0.3s ease-out; 
+}
+
+
 @media (max-width: 768px) {
     .image-container {
         display:block;
     }
+
+    .paleta {
+        transform: rotate(-20deg);
+        margin-left: -15em;
+        height: 17em;
+        bottom: -70px;
+    }
+    
+    .cono{
+        margin-left: -8em;
+        height: 27em;
+        bottom: -160px;
+        transform: rotate(20deg);
+    }
+    
+    .sundae{
+        margin-left: -10em;
+        height: 18em;
+        bottom: -60px;
+    }
+    
+    .comparte{
+        position: absolute;
+        left: 5em;
+        height: 8em;
+        bottom: 11em;
+        
+    }
+
+    @keyframes subirPaleta {
+    0% {
+        transform: translateY(100px) rotate(-20deg); /* Mantiene la rotación y el desplazamiento */
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) rotate(-20deg);
+        opacity: 1;
+    }
+}
+
+@keyframes subirCono {
+    0% {
+        transform: translateY(100px) rotate(20deg); /* Mantiene la rotación y el desplazamiento */
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) rotate(20deg);
+        opacity: 1;
+    }
+}
+
 }

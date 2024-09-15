@@ -1,18 +1,17 @@
-@if(isset($images['fondo']) && isset($images['helados']))
-    <section class="principle-section" style="background-image: url('{{ asset($images['fondo'][0]->direccion) }}'); background-size: cover; background-position: center; height: 400px; position: relative;">
-        @foreach($images['helados'] as $helado)
-            <img src="{{ asset($helado->direccion) }}" alt="{{ $helado->nombre }}" style="position: absolute; width: 100px; height: auto; left: {{ $loop->index * 25 }}%; top: 50%; transform: translateY(-50%);">
-        @endforeach
-    </section>
-@else
-    <section class="principle-section">
-        <p>No se encontraron imágenes para el catálogo</p>
-    </section>
-@endif
+<section class="principle-section image-background" style="background-image: url('{{ asset($image1->first()->direccion) }}');">
+    <img src="{{asset($image2->first()->direccion)}}" alt="cinta negra" class="imagenEnca paleta">
+    <img src="{{asset($image3->first()->direccion)}}" alt="nevada" class="imagenEnca cono">
+    <img src="{{asset($image4->first()->direccion)}}" alt="banana" class="imagenEnca sundae">
+    <img src="{{ asset('imagenes/comparte.svg') }}" alt="comparte" class="comparte">
+</section>
 
 <div class="image-container">
-    <a href="https://heladosarita.com/nuestros-productos/sarita/"><img src="{{ asset('images/helados.png') }}" alt="Normal"></a>
-    <a href="https://heladosarita.com/nuestros-productos/sarita/"><img src="{{ asset('images/yogurt.png') }}" alt="Yogurt"></a>
+    <section>
+        <a href="https://heladosarita.com/nuestros-productos/sarita/"><img src="{{ asset('images/helados.png') }}" alt="Normal"></a>
+    </section>
+    <section>
+        <a href="https://heladosarita.com/nuestros-productos/sarita/"><img src="{{ asset('images/yogurt.png') }}" alt="Yogurt"></a>
+    </section>
 </div>
 
 <!-- Barra Inferior-->
@@ -39,3 +38,27 @@
     </div>
 </footer>
 
+{{-- script --}}
+<script>
+    document.querySelector('.comparte').addEventListener('mousemove', function(e) {
+        const compartImage = e.currentTarget;
+        const rect = compartImage.getBoundingClientRect();
+        
+        // Calcula la posición del mouse en relación a la imagen
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        
+        // Calcula los movimientos opuestos basados en la posición del mouse
+        const moveX = (rect.width / 2 - mouseX) / 10;
+        const moveY = (rect.height / 2 - mouseY) / 10;
+    
+        // Aplica el movimiento opuesto al mouse
+        compartImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    });
+    
+    document.querySelector('.comparte').addEventListener('mouseleave', function(e) {
+        // Restaura la imagen a su posición original cuando el mouse sale
+        e.currentTarget.style.transform = 'translate(0, 0)';
+    });
+</script>
+    
