@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use PhpParser\Node\Expr\Cast\String_;
 
 class HomeController extends Controller
 {
@@ -24,10 +27,12 @@ class HomeController extends Controller
 
     public function catalogo()
     {
+        $images = $this->traerImagenes('Catalogo');
+        dd($images);
         if (request()->ajax()) {
-            return view('partials.catalogo')->render();
+            return view('partials.catalogo', compact('images'))->render();
         }
-        return view('index');
+        return view('index', compact('images'));
     }
 
     public function ubicacion()
@@ -52,5 +57,13 @@ class HomeController extends Controller
             return view('carrito')->render();
         }
         return view('index');
+    }
+
+    //Funcion para traer Imagenes
+    public function traerImagenes($vista){
+        $images = DB::table('image')
+                     ->where('vista', $vista)
+                     ->get();
+        return $images->groupBy('id');
     }
 }

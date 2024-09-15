@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CatalogoController;
+
 
 Route::get('/', [HomeController::class, 'inicio'])->name('inicio');
 Route::get('/nosotros', [HomeController::class, 'nosotros'])->name('nosotros');
