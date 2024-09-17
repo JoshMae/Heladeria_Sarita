@@ -20,17 +20,17 @@
 
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Inicio">
+                    <a href="#" data-vista="inicio" data-bs-toggle="tooltip" data-bs-placement="right" title="Inicio">
                         <i class="bi bi-house-door"></i> <span class="menu-text">Inicio</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Orders">
+                    <a href="#" data-vista="ordenes" data-bs-toggle="tooltip" data-bs-placement="right" title="Ordenes">
                         <i class="bi bi-cart"></i> <span class="menu-text">Ordenes</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Products">
+                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Productos">
                         <i class="bi bi-box-seam"></i> <span class="menu-text">Inventario</span>
                     </a>
                 </li>
@@ -40,7 +40,7 @@
                     </a>                    
                 </li>
                 <li>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Reporte Financiero">
+                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Reporte de Ventas">
                         <i class="bi bi-graph-up"></i> <span class="menu-text">Ventas</span>
                     </a>                    
                 </li>
@@ -65,12 +65,16 @@
             </nav>
 
             <div class="container container-fluid">
-                <h2>Contenido principal</h2>
-                <p>Aquí va el contenido de tu página.</p>
+                <div id="contenido-dinamico">
+                    <!-- Aquí se cargará el contenido dinámicamente -->
+                </div>
             </div>
         </div>
     </div>
 
+    <script> var baseUrl = "{{ url('/') }}"; </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/sidebar.js') }}"></script>
 </body>
