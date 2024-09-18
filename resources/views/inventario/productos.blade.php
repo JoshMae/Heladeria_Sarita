@@ -74,10 +74,6 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="codigo">Código</label>
-              <input type="text" class="form-control" id="codigo" name="codigo" required>
-            </div>
-            <div class="form-group">
               <label for="nombreProducto">Nombre del Producto</label>
               <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" required>
             </div>

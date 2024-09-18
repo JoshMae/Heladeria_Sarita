@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     // Función para cargar las categorías en los selects
     function loadCategories() {
-        const ids = ['filter-categoria', 'idCategoria']; // IDs de los selects de categoría
+        const ids = ['filter-categoria', 'idCategoria']; 
         $.ajax({
             url: `${baseUrl}/categorias`,
             method: 'GET',
@@ -162,25 +162,43 @@ $(document).ready(function() {
         $('#addProductModal').modal('show');
     });
 
+    
+
     // Guardar nuevo producto
     $('#saveProductBtn').on('click', function() {
-        const formData = new FormData($('#addProductForm')[0]);
+        let formData = new FormData($('#addProductForm')[0]);
+        
+        let tipoGuardado = '2';
+        formData.append('tipoGuardado', tipoGuardado);
+
+        // Depuración: Mostrar todos los datos del formulario
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }
 
         $.ajax({
             url: `${baseUrl}/productos`,
-            method: 'POST',
+            type: 'POST',
             data: formData,
             processData: false,
             contentType: false,
             success: function(response) {
-                $('#addProductModal').modal('hide');
-                alert('Producto agregado con éxito');
-                loadProducts();
-                $('#addProductForm')[0].reset();
+                if (response.success) {
+                    alert('Producto guardado exitosamente');
+                    $('#addProductModal').modal('hide');
+                    // Aquí puedes agregar código para actualizar la lista de productos
+                } else {
+                    alert('Error al guardar el producto');
+                }
             },
-            error: function(xhr, status, error) {
-                console.error("Error al agregar el producto:", error);
-                alert('Hubo un error al agregar el producto');
+            error: function(xhr) {
+                let errors = xhr.responseJSON.errors;
+                let errorMessage = 'Se encontraron los siguientes errores:\n';
+                for (let field in errors) {
+                    errorMessage += `${field}: ${errors[field].join(', ')}\n`;
+                }
+                alert(errorMessage);
+                console.log('Error completo:', xhr.responseJSON);
             }
         });
     });

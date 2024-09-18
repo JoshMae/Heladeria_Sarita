@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -39,23 +41,48 @@ class ProductoController extends Controller
     // Guardar un nuevo producto
     public function store(Request $request)
     {
-        // Validar los datos de entrada
         $request->validate([
-            'idCategoria' => 'required',
-            'codigo' => 'required|unique:producto,codigo',
-            'nombreProducto' => 'required',
-            'idSabor' => 'required',
-            'idTamanio' => 'required',
-            'precioVenta' => 'required|numeric',
-            'cantidad' => 'required|integer',
-            'imagen' => 'nullable|image',
+            'idCategoria' => 'required|exists:categoria,idCategoria',
+            'nombreProducto' => 'required|string|max:75',
+            'idSabor' => 'required|exists:sabor,idSabor',
+            'idTamanio' => 'required|exists:tamanio,idTamanio',
+            'precioVenta' => 'nullable|numeric|min:0',
+            'cantidad' => 'nullable|integer|min:0',
+            'imagen' => 'nullable|string|max:255', // 5MB Max
+            'tipoGuardado' => 'required|in:1,2',
         ]);
 
-        // Crear el nuevo producto
-        $producto = Producto::create($request->all());
+        $producto = new Producto();
+        $producto->fill($request->except('imagen', 'tipoGuardado'));
 
-        // Retornar el producto recién creado
-        return response()->json($producto, 201);
+        // Generar código automáticamente
+        $producto->codigo = $this->generarCodigo($request->idCategoria);
+
+        // Asignar idProductoDestino basado en el tipo de guardado
+        $producto->idProductoDestino = $request->tipoGuardado === 'catalogo' ? 1 : 2;
+
+        // Manejar la carga de imagen
+        if ($request->hasFile('imagen')) {
+            $imagen = $request->file('imagen');
+            $nombreImagen = Str::slug($producto->nombreProducto) . '_' . time() . '.' . $imagen->getClientOriginalExtension();
+            $rutaImagen = $imagen->storeAs('public/productos', $nombreImagen);
+            $producto->imagen = Storage::url($rutaImagen); // Esto guardará la URL pública
+        }
+
+        $producto->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Producto guardado exitosamente',
+            'producto' => $producto
+        ]);
+    }
+
+    private function generarCodigo($idCategoria)
+    {
+        $ultimoProducto = Producto::where('idCategoria', $idCategoria)->latest('idProducto')->first();
+        $numeroSecuencial = $ultimoProducto ? intval(substr($ultimoProducto->codigo, -4)) + 1 : 1;
+        return sprintf('PROD%03d%04d', $idCategoria, $numeroSecuencial);
     }
 
     

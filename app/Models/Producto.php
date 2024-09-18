@@ -14,15 +14,16 @@ class Producto extends Model
     public $timestamps = true; 
 
     protected $fillable = [
-        'idCategoria',
         'codigo',
+        'idCategoria',
         'nombreProducto',
         'idSabor',
         'idTamanio',
         'precioVenta',
         'cantidad',
         'imagen',
-        'estado'
+        'estado',
+        'idProductoDestino'
     ];
 
     public function categoria()
