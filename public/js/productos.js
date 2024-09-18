@@ -29,6 +29,20 @@ $(document).ready(function() {
         });
     }
 
+    //funcion para cargar los destinos en el select del modal
+    function loadDestinos(){
+        return $.ajax({
+            url: `${baseUrl}/destinos`,
+            method:'GET',
+            success: function(data) {
+                console.log("Respuesta de loadDestinos:", data); // Verificar la respuesta
+            },
+            error: function(xhr, status, error) {
+                console.error("Error al cargar destinos:", error);
+            }
+        });
+    }
+
     // Función para llenar un select
     function fillSelect(selectId, data, valueField, textField, defaultOption = null) {
         const select = $(`#${selectId}`);
@@ -59,8 +73,12 @@ $(document).ready(function() {
             success: function(response) {
                 const tableBody = $('#productos-table tbody');
                 tableBody.empty();
-
+                
                 response.forEach(function(producto, index) {
+                    let cant= producto.cantidad;
+                    if(cant===null){
+                        cant='N/A';
+                    }
                     tableBody.append(`
                         <tr>
                             <td>${index + 1}</td>
@@ -70,7 +88,7 @@ $(document).ready(function() {
                             <td>${producto.sabor ? producto.sabor.nombreSabor : ''}</td>
                             <td>${producto.tamanio ? producto.tamanio.tamanio : ''}</td>
                             <td>Q. ${producto.precioVenta}</td>
-                            <td>${producto.cantidad}</td>
+                            <td>${cant}</td>
                             <td>
                                 <button class="btn btn-sm btn-primary edit-product" data-id="${producto.idProducto}">Editar</button>
                                 <button class="btn btn-sm btn-danger delete-product" data-id="${producto.idProducto}">Eliminar</button>
@@ -141,28 +159,37 @@ $(document).ready(function() {
             loadCategories(),
             loadSabores(),
             loadTamanios(),
+            loadDestinos(),  
             loadProductData(productId)
-        ]).then(([categorias, sabores, tamanios, producto]) => {
+        ]).then(([categorias, sabores, tamanios, destinos, producto]) => {
+            
             fillSelect('idCategoria', categorias, 'idCategoria', 'nombreCategoria', { value: '', text: 'Seleccione una Categoría' });
             fillSelect('idSabor', sabores, 'idSabor', 'nombreSabor', { value: '', text: 'Seleccione un sabor' });
             fillSelect('idTamanio', tamanios, 'idTamanio', 'tamanio', { value: '', text: 'Seleccione un tamaño' });
-
+            fillSelect('idProductoDestino', destinos, 'idProductoDestino', 'destino', { value: '', text: 'Seleccione un Destino' });
+        
             $('#idCategoria').val(producto.idCategoria);
             $('#nombreProducto').val(producto.nombreProducto);
             $('#idSabor').val(producto.idSabor);
             $('#idTamanio').val(producto.idTamanio);
             $('#precioVenta').val(producto.precioVenta);
             $('#cantidad').val(producto.cantidad);
-
-            let rutaCompleta = `${baseUrl}/${producto.imagen}`;
-            $('#previewImagen').attr('src', rutaCompleta).show();
-
+            $('#idProductoDestino').val(producto.idProductoDestino);
+        
+            let rutaCompleta = producto.imagen ? `${baseUrl}/${producto.imagen}` : '';
+            if (producto.imagen) {
+                $('#previewImagen').attr('src', rutaCompleta).show();
+            } else {
+                $('#previewImagen').hide();
+            }
+        
             option = 2;
             $('#addProductModalLabel').text('Actualizar Producto');
             $('#addProductModal').modal('show');
         }).catch(error => {
             console.error("Error al preparar el modal de edición:", error);
         });
+        
     }
 
     //abre modal para editar un producto
@@ -173,11 +200,12 @@ $(document).ready(function() {
 
     // Abrir modal para agregar producto
     $('#add-product-btn').on('click', function() {
-        Promise.all([loadCategories(), loadSabores(), loadTamanios()])
-            .then(([categorias, sabores, tamanios]) => {
+        Promise.all([loadCategories(), loadSabores(), loadTamanios(), loadDestinos()])
+            .then(([categorias, sabores, tamanios, destinos]) => {
                 fillSelect('idCategoria', categorias, 'idCategoria', 'nombreCategoria', { value: '', text: 'Seleccione una Categoría' });
                 fillSelect('idSabor', sabores, 'idSabor', 'nombreSabor', { value: '', text: 'Seleccione un sabor' });
                 fillSelect('idTamanio', tamanios, 'idTamanio', 'tamanio', { value: '', text: 'Seleccione un tamaño' });
+                fillSelect('idProductoDestino', destinos, 'idProductoDestino', 'destino', { value: '', text: 'Seleccione un Destino' });
 
                 clearForm();
                 option = 1;
@@ -197,9 +225,9 @@ $(document).ready(function() {
         const url = option === 1 ? `${baseUrl}/productos` : `${baseUrl}/productos/${currentProductId}`;
         const method = option === 1 ? 'POST' : 'PUT';
 
-        if (option === 1) {
-            formData.append('tipoGuardado', '2');
-        }
+       // if (option === 1) {
+         //   formData.append('tipoGuardado', '2');
+       // }
 
         // If it's an update (PUT) request, we need to append the _method field
         if (method === 'PUT') {

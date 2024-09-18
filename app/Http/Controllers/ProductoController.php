@@ -4,12 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-
-use Illuminate\Support\Facades\File;
 
 class ProductoController extends Controller
 {
@@ -51,11 +45,11 @@ class ProductoController extends Controller
             'nombreProducto' => 'required|string|max:75',
             'idSabor' => 'required|exists:sabor,idSabor',
             'idTamanio' => 'required|exists:tamanio,idTamanio',
-            'tipoGuardado' => 'required|in:1,2',
+            'idProductoDestino' => 'required|exists:productodestino,idProductoDestino',
         ]);
 
         $producto = new Producto();
-        $producto->fill($request->except('imagen', 'tipoGuardado'));
+        $producto->fill($request->except('imagen'));
 
         // Generar código automáticamente
         $producto->codigo = $this->generarCodigo($request->idCategoria);
@@ -107,8 +101,8 @@ class ProductoController extends Controller
             'idSabor' => 'required',
             'idTamanio' => 'required',
             'precioVenta' => 'nullable|numeric',
-            'cantidad' => 'required|integer',
-            'imagen' => 'nullable|image',
+            'cantidad' => 'nullable|integer',
+            'idProductoDestino' => 'required',
         ]);
 
         $producto = Producto::findOrFail($id);

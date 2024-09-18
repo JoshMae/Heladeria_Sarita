@@ -8,7 +8,7 @@ use App\Http\Controllers\SaborController;
 use App\Http\Controllers\TamanioController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CategoriaController;
-
+use App\Http\Controllers\DestinosController;
 
 Route::get('/', [HomeController::class, 'inicio'])->name('inicio');
 Route::get('/nosotros', [HomeController::class, 'nosotros'])->name('nosotros');
@@ -21,6 +21,8 @@ Route::get('/cargar-vista/{vista}', [ContenidoController::class, 'cargarVista'])
 Route::get('/cargar-contenido-inventario/{contenido}', [ContenidoController::class, 'cargarContenidoInventario']);
 
 Route::resource('sabores', SaborController::class);
+
+Route::get('/destinos', [DestinosController::class, 'index']);
 
 Route::get('/tamanios', [TamanioController::class, 'index']);
 

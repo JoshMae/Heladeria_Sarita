@@ -116,6 +116,13 @@
                       <img id="previewImagen" src="" alt="Previsualización de la imagen" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                     </div>
                   </div>
+
+                  <div class="col-md-4" style="margin-top: -4rem;">
+                    <label for="idProductoDestino" class="form-label">Destinado a</label>
+                    <select class="form-select" id="idProductoDestino" name="idProductoDestino" required>
+                        <!-- Las opciones se cargarán dinámicamente -->
+                    </select>
+                </div>
               </form>
           </div>
           <div class="modal-footer">
