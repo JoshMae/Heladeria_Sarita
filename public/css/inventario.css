@@ -41,3 +41,62 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: #ffffff;
 }
+
+
+/*Estilos para modales*/
+.modal-content {
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.modal-header {
+    background: linear-gradient(135deg, #043ea1 0%, #2575fc 100%);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 20px;
+}
+.modal-title {
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.modal-body {
+    padding: 30px;
+}
+.form-label {
+    font-weight: 500;
+    color: #333;
+}
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-control:focus, .form-select:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+.btn {
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+.btn-primary {
+    background: #00a8db 100%;
+    border: none;
+}
+.btn-primary:hover {
+    background: #097596 100%;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+.btn-secondary {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ced4da;
+}
+.btn-secondary:hover {
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}

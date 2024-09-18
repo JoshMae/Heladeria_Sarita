@@ -214,4 +214,16 @@ $(document).ready(function() {
             }
         });
     });
+
+   
+        // Asegura que el modal se cierre cuando se hace clic en el botón Cancelar
+        document.querySelector('.btn-secondary').addEventListener('click', function() {
+          $('#addProductModal').modal('hide');
+        });
+    
+        // También cierra correctamente cuando se hace clic en la X
+        document.querySelector('.close').addEventListener('click', function() {
+          $('#addProductModal').modal('hide');
+        });
+   
 });

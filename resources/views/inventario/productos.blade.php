@@ -56,60 +56,95 @@
 </div>
 
 <!-- Modal para Agregar Producto -->
-<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addProductModalLabel">Agregar Nuevo Producto</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="addProductForm" enctype="multipart/form-data">
-            <div class="form-group">
-              <label for="idCategoria">Categoría</label>
-              <select class="form-control" id="idCategoria" name="idCategoria" required>
-                <!-- Las opciones se cargarán dinámicamente -->
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="nombreProducto">Nombre del Producto</label>
-              <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" required>
-            </div>
-            <div class="form-group">
-              <label for="idSabor">Sabor</label>
-              <select class="form-control" id="idSabor" name="idSabor" required>
-                <!-- Las opciones se cargarán dinámicamente -->
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="idTamanio">Tamaño</label>
-              <select class="form-control" id="idTamanio" name="idTamanio" required>
-                <!-- Las opciones se cargarán dinámicamente -->
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="precioVenta">Precio de Venta</label>
-              <input type="number" class="form-control" id="precioVenta" name="precioVenta" step="0.01" required>
-            </div>
-            <div class="form-group">
-              <label for="cantidad">Cantidad</label>
-              <input type="number" class="form-control" id="cantidad" name="cantidad" required>
-            </div>
-            <div class="form-group">
-              <label for="imagen">Imagen</label>
-              <input type="file" class="form-control-file" id="imagen" name="imagen">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" id="saveProductBtn">Guardar Producto</button>
-        </div>
+          <div class="modal-header">
+              <h5 class="modal-title text-white" id="addProductModalLabel">Agregar Nuevo Producto</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form id="addProductForm" enctype="multipart/form-data">
+                  <div class="row mb-3">
+                      <div class="col-md-6">
+                          <label for="idCategoria" class="form-label">Categoría</label>
+                          <select class="form-select" id="idCategoria" name="idCategoria" required>
+                              <!-- Las opciones se cargarán dinámicamente -->
+                          </select>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="nombreProducto" class="form-label">Nombre del Producto</label>
+                          <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" required>
+                      </div>
+                  </div>
+
+                  <div class="row mb-3">
+                      <div class="col-md-4">
+                          <label for="idSabor" class="form-label">Sabor</label>
+                          <select class="form-select" id="idSabor" name="idSabor" required>
+                              <!-- Las opciones se cargarán dinámicamente -->
+                          </select>
+                      </div>
+                      <div class="col-md-4">
+                          <label for="idTamanio" class="form-label">Tamaño</label>
+                          <select class="form-select" id="idTamanio" name="idTamanio" required>
+                              <!-- Las opciones se cargarán dinámicamente -->
+                          </select>
+                      </div>
+                      <div class="col-md-4">
+                          <label for="precioVenta" class="form-label">Precio de Venta</label>
+                          <input type="number" class="form-control" id="precioVenta" name="precioVenta" step="0.01" required>
+                      </div>
+                  </div>
+
+                  <div class="row mb-3">
+                      <div class="col-md-6">
+                          <label for="cantidad" class="form-label">Cantidad</label>
+                          <input type="number" class="form-control" id="cantidad" name="cantidad" required>
+                      </div>
+                  </div>
+
+                  <div class="col-md-12 d-flex align-items-start">
+                    <!-- Input de archivo -->
+                    <div class="input-container" style="margin-right: 1rem;">
+                      <label for="imagen" class="form-label">Imagen</label>
+                      <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
+                    </div>
+                  
+                    <!-- Campo de previsualización con cuadro más elevado y sin ícono por defecto -->
+                    <div class="preview-container" style="border: 1px solid #ccc; width: 15em; height: 15em; display: flex; justify-content: center; align-items: center; margin-top: -5rem; margin-left: 2rem; background-color: #f8f8f8;">
+                      <img id="previewImagen" src="" alt="Previsualización de la imagen" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    </div>
+                  </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" id="saveProductBtn">Guardar Producto</button>
+          </div>
       </div>
-    </div>
+  </div>
 </div>
 
 <script> var baseUrl = "{{ url('/') }}"; </script>
 <script src="{{ asset('js/productos.js') }}"></script>
+
+<script>
+  // Función para previsualizar la imagen
+  document.getElementById('imagen').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('previewImagen');
+    
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        preview.src = e.target.result;
+        preview.style.display = 'block'; // Muestra la imagen
+      };
+      reader.readAsDataURL(file);
+    } else {
+      preview.src = '';
+      preview.style.display = 'none'; // Oculta el área si no hay imagen seleccionada
+    }
+  });
+</script>

@@ -46,7 +46,7 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         // Validaciones esenciales
-        $validatedData = $request->validate([
+        $request->validate([
             'idCategoria' => 'required|exists:categoria,idCategoria',
             'nombreProducto' => 'required|string|max:75',
             'idSabor' => 'required|exists:sabor,idSabor',
