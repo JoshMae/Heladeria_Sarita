@@ -168,13 +168,18 @@ $(document).ready(function() {
     $('#saveProductBtn').on('click', function() {
         let formData = new FormData($('#addProductForm')[0]);
         
-        let tipoGuardado = '2';
-        formData.append('tipoGuardado', tipoGuardado);
+        
+        if ($('#imagen')[0].files[0]) {
+            formData.append('imagen', $('#imagen')[0].files[0]);
+        }
+
+        formData.append('tipoGuardado', '2');
 
         // Depuración: Mostrar todos los datos del formulario
         for (let pair of formData.entries()) {
             console.log(pair[0] + ': ' + pair[1]);
         }
+
 
         $.ajax({
             url: `${baseUrl}/productos`,
@@ -186,16 +191,23 @@ $(document).ready(function() {
                 if (response.success) {
                     alert('Producto guardado exitosamente');
                     $('#addProductModal').modal('hide');
+                    loadProducts();
                     // Aquí puedes agregar código para actualizar la lista de productos
                 } else {
                     alert('Error al guardar el producto');
                 }
             },
             error: function(xhr) {
-                let errors = xhr.responseJSON.errors;
-                let errorMessage = 'Se encontraron los siguientes errores:\n';
-                for (let field in errors) {
-                    errorMessage += `${field}: ${errors[field].join(', ')}\n`;
+                let errorMessage = 'Error al guardar el producto:\n';
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    let errors = xhr.responseJSON.errors;
+                    for (let field in errors) {
+                        errorMessage += `${field}: ${errors[field].join(', ')}\n`;
+                    }
+                } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage += xhr.responseJSON.message;
+                } else {
+                    errorMessage += 'Ocurrió un error desconocido';
                 }
                 alert(errorMessage);
                 console.log('Error completo:', xhr.responseJSON);
