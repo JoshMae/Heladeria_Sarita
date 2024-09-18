@@ -7,86 +7,96 @@ use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    // Mostrar todos los productos con estado 1
+    public function index(Request $request)
     {
-        $productos= Producto::where('estado', 1)->get();
+        // Filtros de búsqueda
+        $codigo = $request->input('codigo');
+        $nombre = $request->input('nombre');
+        $idCategoria = $request->input('idCategoria');
+
+        // Consulta base para obtener los productos con estado 1
+        $query = Producto::where('estado', 1);
+
+        // Aplicar filtros
+        if ($codigo) {
+            $query->where('codigo', 'LIKE', '%' . $codigo . '%');
+        }
+        if ($nombre) {
+            $query->where('nombreProducto', 'LIKE', '%' . $nombre . '%');
+        }
+        if ($idCategoria) {
+            $query->where('idCategoria', $idCategoria);
+        }
+
+        // Obtener los productos filtrados
+        $productos = $query->with(['categoria', 'sabor', 'tamanio'])->get();
+
+        // Retornar respuesta JSON para que se pueda mostrar en la tabla
         return response()->json($productos);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Guardar un nuevo producto
     public function store(Request $request)
     {
-        
-        $validatedData = $request->validate([
-            'idCategoria' => 'required|integer|exists:categorias,idCategoria',
-            'nombreProducto' => 'required|string|max:50',
-            'idSabor' => 'required|integer|exists:sabores,idSabor',
-            'idTamanio' => 'required|integer|exists:tamanios,idTamanio',
-            'precioVenta' => 'required|numeric|min:0',
-            'cantidad' => 'required|integer|min:0',
-            'imagen' => 'nullable|string|max:255',
+        // Validar los datos de entrada
+        $request->validate([
+            'idCategoria' => 'required',
+            'codigo' => 'required|unique:producto,codigo',
+            'nombreProducto' => 'required',
+            'idSabor' => 'required',
+            'idTamanio' => 'required',
+            'precioVenta' => 'required|numeric',
+            'cantidad' => 'required|integer',
+            'imagen' => 'nullable|image',
         ]);
 
-        $validatedData['estado'] = 1;
+        // Crear el nuevo producto
+        $producto = Producto::create($request->all());
 
-        $producto = Producto::create($validatedData);
-
+        // Retornar el producto recién creado
         return response()->json($producto, 201);
     }
 
+    
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Mostrar un producto específico para editar
+    public function show($id)
     {
-        $producto= Producto::where('idProducto', $id)
-                    ->where('estado', 1)
-                    ->firstOrFail();
-        
+        $producto = Producto::findOrFail($id);
         return response()->json($producto);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    // Actualizar un producto
+    public function update(Request $request, $id)
     {
-
-        $producto = Producto::findOrFail($id);
-
-        $validatedData = $request->validate([
-            'idCategoria' => 'nullable|integer|exists:categorias,idCategoria',
-            'nombreProducto' => 'nullable|string|max:50',
-            'idSabor' => 'nullable|integer|exists:sabores,idSabor',
-            'idTamanio' => 'nullable|integer|exists:tamanios,idTamanio',
-            'precioVenta' => 'nullable|numeric|min:0',
-            'cantidad' => 'nullable|integer|min:0',
-            'imagen' => 'nullable|string|max:255',
-            'estado' => 'nullable|integer|in:0,1'
+        // Validar los datos de entrada
+        $request->validate([
+            'idCategoria' => 'required',
+            'codigo' => 'required|unique:producto,codigo,' . $id . ',idProducto',
+            'nombreProducto' => 'required',
+            'idSabor' => 'required',
+            'idTamanio' => 'required',
+            'precioVenta' => 'required|numeric',
+            'cantidad' => 'required|integer',
+            'imagen' => 'nullable|image',
         ]);
 
-        $producto->update($validatedData);
+        // Encontrar el producto por su ID y actualizarlo
+        $producto = Producto::findOrFail($id);
+        $producto->update($request->all());
 
+        // Retornar el producto actualizado
         return response()->json($producto);
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Eliminar un producto
+    public function destroy($id)
     {
-        $producto= Producto::findOrFail($id);
-
+        $producto = Producto::findOrFail($id);
         $producto->estado= 0;
         $producto->save();
 
-        return response()->json($producto);
+        return response()->json(null, 204);
     }
 }

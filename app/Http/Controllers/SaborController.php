@@ -11,9 +11,10 @@ class SaborController extends Controller
     public function index()
     {
         $sabores = Sabor::where('estado', 1)->get();
-        return view('sabor.index', compact('sabores'));
+        return response()->json($sabores);
     }
-/* 
+
+/* b
     // Mostrar formulario de creación
     public function create()
     {

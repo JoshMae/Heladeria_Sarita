@@ -15,6 +15,7 @@ body {
     background: #fff;
     color: #fff;
     transition: all 0.3s ease-out;
+    box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
 #sidebar.active {
@@ -119,6 +120,16 @@ a[aria-expanded="true"] {
     font-size: 2em;
 }
 
+.style-container{
+    background-color: #ffffff;
+    padding: 5em;
+    height: 90%;
+    box-shadow: 0.5em 0.5em 1em rgba(0, 0, 0, 0.2);
+}
+
+
+
+
 @media (max-width: 768px) {
     #sidebar {
         min-width: 80px;
@@ -130,3 +141,5 @@ a[aria-expanded="true"] {
         margin-left: 0 !important;
     }
 }
+
+

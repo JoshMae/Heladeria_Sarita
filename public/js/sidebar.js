@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+document.querySelectorAll('#sidebar a').forEach(function(element) {
+    element.addEventListener('click', function() {
+        bootstrap.Tooltip.getInstance(this).hide(); // Ocultar tooltip del elemento clickeado
+    });
+});
+
 // Función para cargar el contenido dinámicamente
 function cargarVista(vista) {
     const url = `${baseUrl}/cargar-vista/${vista}`;
@@ -22,8 +28,11 @@ function cargarVista(vista) {
         url: url,
         type: 'GET',
         beforeSend: function() {
-            $('#contenido-dinamico').html('<p>Cargando...</p>');
-            
+            $('#contenido-dinamico').html(`
+                <div class="spinner-container">
+                    <div class="loader">
+                </div>
+            `);  
         },
         success: function(response) {
             $('#contenido-dinamico').html(response);

@@ -10,6 +10,6 @@ class TamanioController extends Controller
 {
     public function index(){
         $tamanios= Tamanio::where('estado',1)->get();
-        return view('tamanios.index', compact('tamanios'));
+        return response()->json($tamanios);
     }
 }

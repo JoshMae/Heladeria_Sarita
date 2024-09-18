@@ -6,7 +6,12 @@
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/spinner.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/inventario.css') }}" rel="stylesheet">
 </head>
 <body>
     <div class="wrapper">
@@ -30,7 +35,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Productos">
+                    <a href="#" data-vista="inventario" data-bs-toggle="tooltip" data-bs-placement="right" title="Inventario">
                         <i class="bi bi-box-seam"></i> <span class="menu-text">Inventario</span>
                     </a>
                 </li>
@@ -64,7 +69,7 @@
                 </div>
             </nav>
 
-            <div class="container container-fluid">
+            <div class="container container-fluid style-container">
                 <div id="contenido-dinamico">
                     <!-- Aquí se cargará el contenido dinámicamente -->
                 </div>

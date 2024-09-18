@@ -14,4 +14,12 @@ class ContenidoController extends Controller
 
         return '<p>La vista solicitada no existe.</p>';
     }
+
+    public function cargarContenidoInventario($contenido)
+    {
+        if (view()->exists("inventario.$contenido")) {
+            return view("inventario.$contenido");
+        }
+        return '<p>Contenido de inventario no especificado.</p>';
+    }
 }
