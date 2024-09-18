@@ -101,24 +101,34 @@ class ProductoController extends Controller
     // Actualizar un producto
     public function update(Request $request, $id)
     {
-        // Validar los datos de entrada
         $request->validate([
             'idCategoria' => 'required',
-            'codigo' => 'required|unique:producto,codigo,' . $id . ',idProducto',
-            'nombreProducto' => 'required',
+            'nombreProducto' => 'required', 
             'idSabor' => 'required',
             'idTamanio' => 'required',
-            'precioVenta' => 'required|numeric',
+            'precioVenta' => 'nullable|numeric',
             'cantidad' => 'required|integer',
             'imagen' => 'nullable|image',
         ]);
 
-        // Encontrar el producto por su ID y actualizarlo
         $producto = Producto::findOrFail($id);
-        $producto->update($request->all());
 
-        // Retornar el producto actualizado
-        return response()->json($producto);
+        $producto->fill($request->except('imagen'));
+
+        if ($request->hasFile('imagen')) {
+            $imagen = $request->file('imagen');
+            $imageName = $imagen->getClientOriginalName();
+            $imagen->move(public_path('catalogo'), $imageName);
+            $producto->imagen = 'catalogo/' . $imageName;
+        }
+
+        $producto->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Producto guardado exitosamente',
+            'producto' => $producto
+        ]);
     }
 
     // Eliminar un producto

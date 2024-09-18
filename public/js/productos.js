@@ -7,80 +7,47 @@ $(document).ready(function() {
 
     // Función para cargar las categorías en los selects
     function loadCategories() {
-        const ids = ['filter-categoria', 'idCategoria']; 
-        $.ajax({
+        return $.ajax({
             url: `${baseUrl}/categorias`,
-            method: 'GET',
-            success: function(response) {
-                ids.forEach(function(id) {
-                    const select = $(`#${id}`);
-                    select.empty();
-                    select.append($('<option>', {
-                        value: '',
-                        text: 'Todas las categorías'
-                    }));
-                    $.each(response, function(i, categoria) {
-                        select.append($('<option>', {
-                            value: categoria.idCategoria,
-                            text: categoria.nombreCategoria
-                        }));
-                    });
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error("Error al cargar las categorías:", error);
-            }
+            method: 'GET'
         });
     }
 
     // Función para cargar los sabores en el select del modal
     function loadSabores() {
-        $.ajax({
+        return $.ajax({
             url: `${baseUrl}/sabores`,
-            method: 'GET',
-            success: function(response) {
-                const select = $('#idSabor');
-                select.empty();
-                select.append($('<option>', {
-                    value: '',
-                    text: 'Seleccione un sabor'
-                }));
-                $.each(response, function(i, sabor) {
-                    select.append($('<option>', {
-                        value: sabor.idSabor,
-                        text: sabor.nombreSabor
-                    }));
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error("Error al cargar los sabores:", error);
-            }
+            method: 'GET'
         });
     }
 
     // Función para cargar los tamaños en el select del modal
     function loadTamanios() {
-        $.ajax({
+        return $.ajax({
             url: `${baseUrl}/tamanios`,
-            method: 'GET',
-            success: function(response) {
-                const select = $('#idTamanio');
-                select.empty();
-                select.append($('<option>', {
-                    value: '',
-                    text: 'Seleccione un tamaño'
-                }));
-                $.each(response, function(i, tamanio) {
-                    select.append($('<option>', {
-                        value: tamanio.idTamanio,
-                        text: tamanio.tamanio
-                    }));
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error("Error al cargar los tamaños:", error);
-            }
+            method: 'GET'
         });
+    }
+
+    // Función para llenar un select
+    function fillSelect(selectId, data, valueField, textField, defaultOption = null) {
+        const select = $(`#${selectId}`);
+        select.empty();
+        if (defaultOption) {
+            select.append($('<option>', defaultOption));
+        }
+        $.each(data, function(i, item) {
+            select.append($('<option>', {
+                value: item[valueField],
+                text: item[textField]
+            }));
+        });
+    }
+
+    // Función para limpiar el formulario
+    function clearForm() {
+        $('#addProductForm')[0].reset();
+        $('#previewImagen').attr('src', '').hide();
     }
 
     // Función para cargar los productos
@@ -118,9 +85,15 @@ $(document).ready(function() {
         });
     }
 
+    let option = 1;
+    let currentProductId = null;
+    
     // Cargar datos iniciales
-    loadCategories();
-    loadProducts();
+    Promise.all([loadCategories(), loadProducts()])
+        .then(([categorias]) => {
+            fillSelect('filter-categoria', categorias, 'idCategoria', 'nombreCategoria', { value: '', text: 'Todas las categorías' });
+        })
+        .catch(error => console.error("Error al cargar datos iniciales:", error));
 
     // Manejar la búsqueda y filtrado
     $('#filter-btn').on('click', function() {
@@ -154,51 +127,102 @@ $(document).ready(function() {
         }
     });
 
-    // Abrir modal para agregar producto
-    $('#add-product-btn').on('click', function() {
-        loadCategories();
-        loadSabores();
-        loadTamanios();
-        $('#addProductModal').modal('show');
+    function loadProductData(productId) {
+        return $.ajax({
+            url: `${baseUrl}/productos/${productId}`,
+            method: 'GET'
+        });
+    }
+
+    // Función para preparar el modal de edición
+    function prepareEditModal(productId) {
+        currentProductId = productId;  
+        Promise.all([
+            loadCategories(),
+            loadSabores(),
+            loadTamanios(),
+            loadProductData(productId)
+        ]).then(([categorias, sabores, tamanios, producto]) => {
+            fillSelect('idCategoria', categorias, 'idCategoria', 'nombreCategoria', { value: '', text: 'Seleccione una Categoría' });
+            fillSelect('idSabor', sabores, 'idSabor', 'nombreSabor', { value: '', text: 'Seleccione un sabor' });
+            fillSelect('idTamanio', tamanios, 'idTamanio', 'tamanio', { value: '', text: 'Seleccione un tamaño' });
+
+            $('#idCategoria').val(producto.idCategoria);
+            $('#nombreProducto').val(producto.nombreProducto);
+            $('#idSabor').val(producto.idSabor);
+            $('#idTamanio').val(producto.idTamanio);
+            $('#precioVenta').val(producto.precioVenta);
+            $('#cantidad').val(producto.cantidad);
+
+            let rutaCompleta = `${baseUrl}/${producto.imagen}`;
+            $('#previewImagen').attr('src', rutaCompleta).show();
+
+            option = 2;
+            $('#addProductModalLabel').text('Actualizar Producto');
+            $('#addProductModal').modal('show');
+        }).catch(error => {
+            console.error("Error al preparar el modal de edición:", error);
+        });
+    }
+
+    //abre modal para editar un producto
+    $(document).on('click', '.edit-product', function(){
+        const productId = $(this).data('id');
+        prepareEditModal(productId);
     });
 
-    
+    // Abrir modal para agregar producto
+    $('#add-product-btn').on('click', function() {
+        Promise.all([loadCategories(), loadSabores(), loadTamanios()])
+            .then(([categorias, sabores, tamanios]) => {
+                fillSelect('idCategoria', categorias, 'idCategoria', 'nombreCategoria', { value: '', text: 'Seleccione una Categoría' });
+                fillSelect('idSabor', sabores, 'idSabor', 'nombreSabor', { value: '', text: 'Seleccione un sabor' });
+                fillSelect('idTamanio', tamanios, 'idTamanio', 'tamanio', { value: '', text: 'Seleccione un tamaño' });
 
-    // Guardar nuevo producto
-    $('#saveProductBtn').on('click', function() {
+                clearForm();
+                option = 1;
+                $('#addProductModalLabel').text("Agregar Nuevo Producto");
+                $('#addProductModal').modal('show');
+            })
+            .catch(error => console.error("Error al preparar el modal de agregar:", error));
+    });
+
+    function saveOrEdit() {
         let formData = new FormData($('#addProductForm')[0]);
-        
         
         if ($('#imagen')[0].files[0]) {
             formData.append('imagen', $('#imagen')[0].files[0]);
         }
+        
+        const url = option === 1 ? `${baseUrl}/productos` : `${baseUrl}/productos/${currentProductId}`;
+        const method = option === 1 ? 'POST' : 'PUT';
 
-        formData.append('tipoGuardado', '2');
-
-        // Depuración: Mostrar todos los datos del formulario
-        for (let pair of formData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
+        if (option === 1) {
+            formData.append('tipoGuardado', '2');
         }
 
+        // If it's an update (PUT) request, we need to append the _method field
+        if (method === 'PUT') {
+            formData.append('_method', 'PUT');
+        }
 
         $.ajax({
-            url: `${baseUrl}/productos`,
-            type: 'POST',
+            url: url,
+            type: 'POST',  // Always use POST for FormData
             data: formData,
             processData: false,
             contentType: false,
             success: function(response) {
                 if (response.success) {
-                    alert('Producto guardado exitosamente');
+                    alert(option === 1 ? 'Producto guardado exitosamente' : 'Producto Actualizado con Éxito');
                     $('#addProductModal').modal('hide');
                     loadProducts();
-                    // Aquí puedes agregar código para actualizar la lista de productos
                 } else {
-                    alert('Error al guardar el producto');
+                    alert(option === 1 ? 'Error al guardar el producto' : 'No se pudo actualizar el producto');
                 }
             },
             error: function(xhr) {
-                let errorMessage = 'Error al guardar el producto:\n';
+                let errorMessage = `Error al ${option === 1 ? 'guardar' : 'actualizar'} el producto:\n`;
                 if (xhr.responseJSON && xhr.responseJSON.errors) {
                     let errors = xhr.responseJSON.errors;
                     for (let field in errors) {
@@ -213,17 +237,26 @@ $(document).ready(function() {
                 console.log('Error completo:', xhr.responseJSON);
             }
         });
+    }
+
+    // Guardar nuevo producto o actualizar existente
+    $('#saveProductBtn').on('click', function() {
+        saveOrEdit();
     });
 
-   
-        // Asegura que el modal se cierre cuando se hace clic en el botón Cancelar
-        document.querySelector('.btn-secondary').addEventListener('click', function() {
-          $('#addProductModal').modal('hide');
-        });
-    
-        // También cierra correctamente cuando se hace clic en la X
-        document.querySelector('.close').addEventListener('click', function() {
-          $('#addProductModal').modal('hide');
-        });
-   
+    // Asegura que el modal se cierre cuando se hace clic en el botón Cancelar
+    $('.btn-secondary').on('click', function() {
+        clearForm();
+        $('#addProductModal').modal('hide');
+    });
+
+    // También cierra correctamente cuando se hace clic en la X
+    $('.close').on('click', function() {
+        clearForm();
+        $('#addProductModal').modal('hide');
+    });
+
+    $('#addProductModal').on('hidden.bs.modal', function () {
+        clearForm();
+    });
 });
