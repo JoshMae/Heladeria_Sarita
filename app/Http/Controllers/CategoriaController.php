@@ -11,9 +11,17 @@ class CategoriaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categorias = Categoria::where('estado', 1)->get();
+        $nombre= $request->input('nombre');
+
+        $query = Categoria::where('estado', 1);
+
+        if($nombre){
+            $query->where('nombreCategoria', 'LIKE', '%' . $nombre . '%');
+        }
+
+        $categorias= $query->get();
 
         return response()->json($categorias);
     }
@@ -21,17 +29,25 @@ class CategoriaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'nombreCategoria' => 'required|string|max:45',
             'descripcion' => 'nullable|string|max:255'
         ]);
 
-        $validatedData['estado'] = 1;
+        $categoria= new Categoria();
+        $categoria->fill($request->except(''));
 
-        $categoria = Categoria::create($validatedData);
-        return response()->json($categoria, 201);
+        $categoria->estado = 1;
+        
+        $categoria -> save();
+        return response()->json([
+            'success' => true,
+            'message' => 'Categoria guardada exitosamente',
+            'producto' => $categoria
+        ]);
     }
 
     /**
@@ -39,9 +55,7 @@ class CategoriaController extends Controller
      */
     public function show(string $id)
     {
-        $categoria = Categoria::where('idCategoria', $id)
-                          ->where('estado', 1)
-                          ->firstOrFail();
+        $categoria = Categoria::findOrFail($id);
 
         return response()->json($categoria);
     }
@@ -59,7 +73,12 @@ class CategoriaController extends Controller
         ]);
 
         $categoria->update($validatedData);
-        return response()->json($categoria);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Categoria actualizada exitosamente',
+            'producto' => $categoria
+        ]);
     }   
 
     /**

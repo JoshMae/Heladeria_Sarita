@@ -14,7 +14,8 @@ class ProductoController extends Controller
         $codigo = $request->input('codigo');
         $nombre = $request->input('nombre');
         $idCategoria = $request->input('idCategoria');
-
+        $destino= $request->input('destino');
+        
         // Consulta base para obtener los productos con estado 1
         $query = Producto::where('estado', 1);
 
@@ -28,6 +29,12 @@ class ProductoController extends Controller
         if ($idCategoria) {
             $query->where('idCategoria', $idCategoria);
         }
+        if ($destino) {
+            $query->where(function($q) use ($destino) {
+                $q->where('idProductoDestino', $destino)
+                  ->orWhere('idProductoDestino', 1);
+            });
+        }        
 
         // Obtener los productos filtrados
         $productos = $query->with(['categoria', 'sabor', 'tamanio'])->get();

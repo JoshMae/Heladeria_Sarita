@@ -25,15 +25,17 @@ class HomeController extends Controller
         return view('index');
     }
 
-    public function catalogo()
+    
+
+    public function catalogo2()
     {
         $image1 = $this->traerImagenes('1');
         $image2 = $this->traerImagenes('2');
         $image3 = $this->traerImagenes('3');
         $image4 = $this->traerImagenes('4');    
-        //dd($images);
+        
         if (request()->ajax()) {
-            return view('partials.catalogo', compact('image1','image2','image3','image4'))->render();
+            return view('partials.catalogo2', compact('image1','image2','image3','image4'))->render();
         }
         return view('index', compact('image1','image2','image3','image4'));
     }

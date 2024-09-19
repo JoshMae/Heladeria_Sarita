@@ -29,7 +29,7 @@
                     <a class="nav-link {{ request()->is('nosotros') ? 'active' : '' }}" href="{{ route('nosotros') }}">Nosotros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('catalogo') ? 'active' : '' }}" href="{{ route('catalogo') }}">Catálogo</a>
+                    <a class="nav-link {{ request()->is('catalogo2') ? 'active' : '' }}" href="{{ route('catalogo2') }}">Catálogo</a>
                 </li>
             </ul>
             <div class="d-flex">

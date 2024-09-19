@@ -6,18 +6,26 @@
     <div class="card p-3 mb-4">
         <h5>Filtrar Productos</h5>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="filter-codigo">Código</label>
                 <input type="text" id="filter-codigo" class="form-control" placeholder="Código del producto">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="filter-nombre">Nombre</label>
                 <input type="text" id="filter-nombre" class="form-control" placeholder="Nombre del producto">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="filter-categoria">Categoría</label>
                 <select id="filter-categoria" class="form-control">
                     <option value="">Todas las categorías</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="filter-destino">Administrar</label>
+                <select id="filter-destino" class="form-control">
+                    <option value="">Todos los Destinos</option>
+                    <option value="2">Inventario</option>
+                    <option value="3">Catalogo</option>
                 </select>
             </div>
         </div>

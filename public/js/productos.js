@@ -118,7 +118,8 @@ $(document).ready(function() {
         const filters = {
             codigo: $('#filter-codigo').val(),
             nombre: $('#filter-nombre').val(),
-            idCategoria: $('#filter-categoria').val()
+            idCategoria: $('#filter-categoria').val(),
+            destino: $('#filter-destino').val()
         };
         loadProducts(filters);
 
@@ -224,10 +225,6 @@ $(document).ready(function() {
         
         const url = option === 1 ? `${baseUrl}/productos` : `${baseUrl}/productos/${currentProductId}`;
         const method = option === 1 ? 'POST' : 'PUT';
-
-       // if (option === 1) {
-         //   formData.append('tipoGuardado', '2');
-       // }
 
         // If it's an update (PUT) request, we need to append the _method field
         if (method === 'PUT') {
