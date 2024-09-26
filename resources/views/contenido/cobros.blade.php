@@ -1,0 +1,1 @@
+<h1>VENTANA DE COBROS</h1>

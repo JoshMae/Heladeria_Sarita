@@ -40,7 +40,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="Cobros">
+                    <a href="#" data-vista="cobros" data-bs-toggle="tooltip" data-bs-placement="right" title="Cobros">
                         <i class="bi bi-cash-stack"></i> <span class="menu-text">Cobros</span>
                     </a>                    
                 </li>
@@ -62,7 +62,7 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid barra">
-                    <button type="button" id="sidebarCollapse" class="btn boton " >
+                    <button type="button" id="sidebarCollapse" class="btn boton" >
                         <i class="bi bi-list ic"></i>
                     </button>
                     <h2 class="ms-3" style="color: white; font-size:1.4em;">¡ Creamos Momentos de Alegría !</h2>
