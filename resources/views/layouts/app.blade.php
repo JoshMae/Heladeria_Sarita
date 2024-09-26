@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('css/catalogo.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/spinner.css') }}">
 </head>
 <body>
     <!-- Barra Superior -->
@@ -23,7 +24,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ route('inicio') }}">Inicio</a>
+                    <a class="nav-link {{ request()->is('/inicio') ? 'active' : '' }}" href="{{ route('inicio') }}">Inicio</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('nosotros') ? 'active' : '' }}" href="{{ route('nosotros') }}">Nosotros</a>
@@ -57,8 +58,8 @@
 
     <!-- Área de Contenido Dinámico -->
     <div class="content-area">
-        <div id="ajax-content">
-            @yield('content')
+        <div id="contenido-dinamico">
+            <!-- El contenido se cargará aquí dinámicamente -->
         </div>
     </div>
 
@@ -74,38 +75,57 @@
         
     <script>
         $(document).ready(function() {
-            //let map = null;
+            let map = null;
+            let routingControl = null;
     
-            function loadContent(url) {
+            const baseUrl = "{{ url('/') }}";
+    
+            function cargarVista(vista) {
+                
+                const url = `${baseUrl}/${vista}`;
+                
                 $.ajax({
                     url: url,
                     type: 'GET',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest'
                     },
-                    success: function(data) {
-                        $('#ajax-content').html(data);
+                    beforeSend: function() {
+                        $('#contenido-dinamico').html(`
+                            <div class="spinner-container">
+                                <div class="loader"></div>
+                            </div>
+                        `);
+                    },
+                    success: function(response) {
+                        $('#contenido-dinamico').html(response);
                         history.pushState(null, '', url);
+                        localStorage.setItem('vistaActual', vista);
+                        actualizarNavbarActivo(vista);
     
-                        if (url.includes('ubicacion')) {
-                            setTimeout(function() {
-                                initMap();
-                                // Asegurarse de que los estilos se apliquen correctamente
-                                $('.informacion').css('display', 'flex');
-                                adjustLayout();
-                            }, 100);
+                        if (vista === 'ubicacion') {
+                            setTimeout(initMap, 100);
                         } else if (map) {
                             map.remove();
                             map = null;
                         }
+    
+                        adjustLayout();
                     },
-                    error: function(xhr) {
-                        console.log('Error: ' + xhr.status + ' ' + xhr.statusText);
+                    error: function(xhr, status) {
+                        $('#contenido-dinamico').html('<p>Error al cargar el contenido.</p>');
                     }
                 });
             }
     
-            // Función para ajustar el diseño después de la carga
+            function actualizarNavbarActivo(vista) {
+                $('.navbar-nav .nav-item').removeClass('active');
+                $('.navbar-nav .nav-link').removeClass('active');
+
+                $(`.navbar-nav .nav-link[href$="${vista}"]`).addClass('active');
+                $(`.navbar-nav .nav-link[href$="${vista}"]`).parent('li').addClass('active');
+            }
+    
             function adjustLayout() {
                 if ($(window).width() <= 768) {
                     $('.informacion').css('flex-direction', 'column');
@@ -115,12 +135,6 @@
                     $('.fotoTienda').css('margin-top', '15px');
                 }
             }
-    
-            // Llamar a adjustLayout cuando la ventana cambie de tamaño
-            $(window).resize(adjustLayout);
-    
-            let map = null;
-            let routingControl = null;
     
             function initMap() {
                 if (!$('#map').length) {
@@ -173,7 +187,8 @@
             $('.navbar-nav .nav-link, .tooltip-container .nav-link').on('click', function(e) {
                 e.preventDefault();
                 var url = $(this).attr('href');
-                loadContent(url);
+                var vista = url.split('/').pop();
+                cargarVista(vista);
                 
                 // Cerrar el menú solo en dispositivos móviles
                 if ($(window).width() <= 768) {
@@ -183,17 +198,11 @@
     
             // Toggle del menú hamburguesa
             $('.navbar-toggler').on('click', function(e) {
-                e.stopPropagation(); // Evita que el clic se propague
+                e.stopPropagation();
                 $('#navbarNav').toggleClass('show');
             });
     
-            // Ocultar el menú hamburguesa al hacer clic en un enlace
-            $('.navbar-nav .nav-link').on('click', function() {
-                if ($('#navbarNav').hasClass('show')) {
-                    $('#navbarNav').removeClass('show'); // Cerrar el menú solo si está abierto
-                }
-            });
-
+            // Ocultar el menú hamburguesa al hacer clic fuera
             $(document).on('click', function(e) {
                 if (!$(e.target).closest('#navbarNav').length && !$(e.target).closest('.navbar-toggler').length) {
                     $('#navbarNav').removeClass('show');
@@ -202,15 +211,23 @@
     
             // Manejar el evento "popstate" del navegador
             $(window).on('popstate', function() {
-                loadContent(location.href);
+                var vista = location.pathname.split('/').pop() || 'inicio';
+                cargarVista(vista);
             });
     
-            // Inicializar el mapa si la URL incluye 'ubicacion'
-            if (window.location.href.includes('ubicacion')) {
-                initMap();
+            // Cargar la última vista al iniciar la página
+            const ultimaVista = localStorage.getItem('vistaActual');
+            if (ultimaVista) {
+                cargarVista(ultimaVista);
+            } else {
+                // Si no hay vista guardada, cargar la vista de inicio por defecto
+                cargarVista('inicio');
             }
+    
+            // Ajustar el diseño cuando la ventana cambie de tamaño
+            $(window).resize(adjustLayout);
         });
-    </script>
+        </script>
         
     
     

@@ -1,6 +1,6 @@
 <!-- resources/views/partials/nosotros.blade.php -->
 <div class="principle-section" style="background-image: url('{{ asset('images/4.jpg') }}');">
-  <h1 class="floating-text">Nuestro Principio</h1>
+  <h1 class="floating-text " style="margin-top: -2em;">Nuestro Principio</h1>
   <p>Nuestro principio es DIOS. Reconocemos y cumplimos la voluntad de Dios.</p>
 </div>
 

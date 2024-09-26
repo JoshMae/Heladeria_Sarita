@@ -10,7 +10,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DestinosController;
 
-Route::get('/', [HomeController::class, 'inicio'])->name('inicio');
+Route::get('/inicio', [HomeController::class, 'inicio'])->name('inicio');
 Route::get('/nosotros', [HomeController::class, 'nosotros'])->name('nosotros');
 Route::get('/catalogo2', [HomeController::class, 'catalogo2'])->name('catalogo2');
 Route::get('/ubicacion', [HomeController::class, 'ubicacion'])->name('ubicacion');
