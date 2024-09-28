@@ -91,7 +91,7 @@ class CategoriaController extends Controller
         $categoria->estado = 0;
         $categoria->save(); 
         
-        return response()->json($categoria);
+        return response()->json($categoria); 
     }
 
 }

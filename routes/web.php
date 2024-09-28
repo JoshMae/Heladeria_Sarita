@@ -24,8 +24,6 @@ Route::resource('sabores', SaborController::class);
 
 Route::get('/destinos', [DestinosController::class, 'index']);
 
-Route::get('/tamanios', [TamanioController::class, 'index']);
-
 Route::get('/tienda/inicio', function(){
     return view('layouts.administrador');
 });
@@ -47,5 +45,10 @@ Route::get('/categorias/{id}', [CategoriaController::class, 'show']);
 Route::put('/categorias/{id}', [CategoriaController::class, 'update']);
 Route::delete('/categorias/{id}', [CategoriaController::class, 'destroy']);
 
+Route::get('/tamanios', [TamanioController::class, 'index']);
+Route::post('/tamanios', [TamanioController::class, 'store']);
+Route::get('/tamanios/{id}', [TamanioController::class, 'show']);
+Route::put('/tamanios/{id}', [TamanioController::class, 'update']);
+Route::delete('/tamanios/{id}', [TamanioController::class, 'destroy']);
 
 

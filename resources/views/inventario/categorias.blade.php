@@ -22,19 +22,21 @@
 
     <div class="card p-3">
         <h5 class="mb-3">Listado de Categorias</h5>
-        <table class="table table-striped table-hover" id="categoria-table">
-            <thead class="thead-dark">
-                <tr>
-                    <th>No.</th>
-                    <th>Categoria</th>
-                    <th>Descripcion</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--Se cargara de manera Dinamica-->
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover" id="categoria-table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Categoria</th>
+                        <th>Descripcion</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--Se cargara de manera Dinamica-->
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

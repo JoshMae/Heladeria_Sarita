@@ -39,28 +39,31 @@
         <button class="btn btn-success" id="add-product-btn">Agregar Producto</button>
     </div>
 
-    <!-- Tabla de Productos -->
+        <!-- Tabla de Productos -->
     <div class="card p-3">
         <h5 class="mb-3">Lista de Productos</h5>
-        <table class="table table-striped table-hover" id="productos-table">
-            <thead class="thead-dark">
-                <tr>
-                    <th>No.</th>
-                    <th>Código</th>
-                    <th>Categoría</th>
-                    <th>Nombre</th>
-                    <th>Sabor</th>
-                    <th>Tamaño</th>
-                    <th>Precio Venta</th>
-                    <th>Cantidad</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Aquí se cargarán los productos dinámicamente -->
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover" id="productos-table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Código</th>
+                        <th>Categoría</th>
+                        <th>Nombre</th>
+                        <th>Sabor</th>
+                        <th>Tamaño</th>
+                        <th>Precio Venta</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se cargarán los productos dinámicamente -->
+                </tbody>
+            </table>
+        </div>
     </div>
+
 </div>
 
 <!-- Modal para Agregar Producto -->

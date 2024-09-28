@@ -2,9 +2,9 @@
 <footer class="footer-custom">
     <div class="footer-content">
         <div class="footer-left">
-            <a href="https://wa.me/1234567890" target="_blank" class="footer-link">
+            <a href="https://wa.me/41970549" target="_blank" class="footer-link">
                 <img src="{{ asset('images/whatsapp.png') }}" alt="WhatsApp" class="icon-redes">
-                <span>+502 2020 0000</span>
+                <span>+502 41970549</span>
             </a>
             <a href="https://www.instagram.com/sarita" target="_blank" class="footer-link">
                 <img src="{{ asset('images/instagram.png') }}" alt="Instagram" class="icon-redes">
