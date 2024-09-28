@@ -19,8 +19,8 @@ Route::get('/carrito', [HomeController::class, 'carrito'])->name('carrito');
 
 Route::get('/cargar-vista/{vista}', [ContenidoController::class, 'cargarVista']);
 Route::get('/cargar-contenido-inventario/{contenido}', [ContenidoController::class, 'cargarContenidoInventario']);
-
-Route::resource('sabores', SaborController::class);
+/* 
+Route::resource('sabores', SaborController::class); */
 
 Route::get('/destinos', [DestinosController::class, 'index']);
 
@@ -51,4 +51,9 @@ Route::get('/tamanios/{id}', [TamanioController::class, 'show']);
 Route::put('/tamanios/{id}', [TamanioController::class, 'update']);
 Route::delete('/tamanios/{id}', [TamanioController::class, 'destroy']);
 
+Route::get('/sabores', [SaborController::class, 'index']);
+Route::post('/sabores', [SaborController::class, 'store']);
+Route::get('/sabores/{id}', [SaborController::class, 'show']);
+Route::put('/sabores/{id}', [SaborController::class, 'update']);
+Route::delete('/sabores/{id}', [SaborController::class, 'destroy']);
 

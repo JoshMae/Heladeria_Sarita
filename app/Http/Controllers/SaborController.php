@@ -8,59 +8,72 @@ use Illuminate\Http\Request;
 class SaborController extends Controller
 {
     // Mostrar lista de sabores con estado 1
-    public function index()
+    public function index(Request $request)
     {
-        $sabores = Sabor::where('estado', 1)->get();
+        $sabor= $request->input('nombreSabor');
+
+        $query = Sabor::where('estado', 1);
+        if($sabor){
+            $query->where('nombreSabor', $sabor);
+        }
+        $sabores= $query->get();
+
         return response()->json($sabores);
     }
 
-/* b
-    // Mostrar formulario de creación
-    public function create()
-    {
-        return view('sabor.create');
-    }
- */
     // Guardar nuevo sabor
     public function store(Request $request)
     {
+        
         $request->validate([
             'nombreSabor' => 'required|max:75'
         ]);
+        $sabor= new Sabor();
+        $sabor->fill($request->except(''));
+        $sabor->estado=1;
+        $sabor->save();
 
-        Sabor::create([
-            'nombreSabor' => $request->nombreSabor,
-            'estado' => 1
+        return response()->json([
+            'success'=> true, 
+            'message'=>'Sabor creado exitosamente.',
+            'sabor'=>$sabor
         ]);
-
-        return redirect()->route('sabor.index')->with('success', 'Sabor creado exitosamente.');
     }
 
-/*     // Mostrar formulario de edición
-    public function edit(Sabor $sabor)
-    {
-        return view('sabor.edit', compact('sabor'));
+    public function show(string $id){
+        $sabor= Sabor::findOrFail($id);
+        
+        return response()->json($sabor);
     }
- */
+
     // Actualizar sabor existente
-    public function update(Request $request, Sabor $sabor)
-    {
-        $request->validate([
+    public function update(Request $request, string $id)
+    {   
+        $sabor= Sabor::findOrFail($id);
+        $dato=$request->validate([
             'nombreSabor' => 'required|max:75'
         ]);
 
-        $sabor->update([
-            'nombreSabor' => $request->nombreSabor
-        ]);
+        $sabor->update($dato);
 
-        return redirect()->route('sabor.index')->with('success', 'Sabor actualizado exitosamente.');
+        return response()->json([
+            'success'=> true, 
+            'message'=>'Sabor actualizado exitosamente.',
+            'sabor'=>$sabor
+        ]);
     }
 
     // "Eliminar" sabor (cambiar estado a 0)
-    public function destroy(Sabor $sabor)
+    public function destroy(string $id)
     {
-        $sabor->update(['estado' => 0]);
+        $sabor= Sabor::findOrFail($id);
+        $sabor->estado=0;
+        $sabor->save();
 
-        return redirect()->route('sabor.index')->with('success', 'Sabor eliminado exitosamente.');
+        return response()->json([
+            'success'=> true, 
+            'message'=>'Sabor eliminado exitosamente.',
+            'sabor'=>$sabor
+        ]);
     }
 }

@@ -2,7 +2,8 @@
     <div class="nav-bar mb-4">
         <a href="#" data-contenido="productos" class="nav-item">Productos</a>
         <a href="#" data-contenido="categorias" class="nav-item">Categorías</a>
-        <a href="#" data-contenido="tamanios" class="nav-item">Tamaño</a>
+        <a href="#" data-contenido="tamanios" class="nav-item">Tamaños</a>
+        <a href="#" data-contenido="sabores" class="nav-item">Sabores</a>
     </div>
 
     <div id="contenido-inventario">
