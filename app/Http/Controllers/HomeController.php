@@ -51,7 +51,7 @@ class HomeController extends Controller
     public function usuario()
     {
         if (request()->ajax()) {
-            return view('usuario')->render();
+            return view('partials.usuario')->render();
         }
         return view('index');
     }
