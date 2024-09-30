@@ -15,6 +15,12 @@ body {
     margin: auto;
 }
 
+.registrar{
+    max-width: 900px !important;
+    width: 90% !important;
+    align-items: center !important;
+}
+
 .card h2 {
     color: #ffffff;
 }
@@ -73,10 +79,25 @@ body {
 }
 
 .logo-login {
-    width: 7rem;
-    margin-bottom: 1rem;
+    width: 9rem;
+    margin-bottom: -1rem;
 }
 
+.register-link {
+    text-align: center;
+    margin-top: 1rem;
+    color: #FFFFFF;
+}
+
+.register-link a {
+    color: #ffffff;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* 
 @media (max-width: 768px) {
     .card {
         width: 95%;
@@ -84,7 +105,7 @@ body {
     }
 
     .logo-login {
-        width: 5rem;
+        width: 15rem;
     }
 
     .card h2 {
@@ -108,4 +129,4 @@ body {
     .form-label, .form-control, .btn {
         font-size: 0.8rem;
     }
-}
+} */

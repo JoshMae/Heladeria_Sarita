@@ -1,6 +1,17 @@
-<link rel="stylesheet" href="{{ asset('css/login.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Login</title>
+</head>
+<body>
+
+
 
 <div class="container-fluid d-flex flex-column justify-content-center align-items-center min-vh-100">
     <div class="text-center mb-4">
@@ -28,7 +39,7 @@
             </div>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-                <a href="" class="btn btn-outline-light">Registrarse</a>
+                <p class="register-link">¿No tienes una cuenta? <a href="{{ route('registro' )}}">Regístrate aquí</a></p>
             </div>
         </form>
         <div class="mt-3 text-center">
@@ -38,3 +49,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

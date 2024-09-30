@@ -29,12 +29,17 @@ Route::resource('sabores', SaborController::class); */
 Route::get('/destinos', [DestinosController::class, 'index']);
 
 // routes/web.php
+Route::get('/registro', function(){
+    return view('loginUsuario.registro');
+})->name('registro');
+
 Route::get('/tienda', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/tienda', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth'])->group(function () {
-   
+Route::middleware(['web','auth'])->group(function () {
+    
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
     Route::get('/tienda/inicio', function(){
         return view('layouts.administrador');
     });

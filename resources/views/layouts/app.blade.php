@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('css/catalogo.css') }}">
     <link rel="stylesheet" href="{{ asset('css/spinner.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
 <body>
     <!-- Barra Superior -->
